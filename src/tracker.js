@@ -6,6 +6,12 @@ export class Tracker {
         this.#id = 1
     }
 
+    /**
+     * add item to the Map object
+     * @param {String} item 
+     * @param {Number} qty 
+     * @param {Number} price 
+     */
     addItem(item, qty, price) {
         if (typeof item !== "string" || item.trim() === "") {
             throw new Error("Enter a valid name");
@@ -27,7 +33,30 @@ export class Tracker {
         this.id += 1
     }
 
+    /**
+     * display all the item
+     */
     displayItems() {
+        this.#track.forEach((key, value) => {
+            console.log(`id ${key}, ${value}`)
+        })
+    }
 
+    updateItem(id, qty, price) {
+        const found = this.#track.has(id)
+        if (!found) return `no item ${id} found`
+        this.#track.get(id).price = price;
+        this.#track.get(id).quantity = qty;
+    }
+
+    deleteItem(id) {
+        const found = this.#track.has(id)
+        if (!found) return `no item ${id} found`
+        this.#track.delete(id) 
+        return "delete successful"
+    }
+
+    deleteAllItem() {
+        this.#track.clear();
     }
 }
